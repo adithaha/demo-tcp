@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://camel.apache.org/schema/cxf     http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+    <!-- Camel Routes -->
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="employeeRS">
+            <from id="_from1" uri="netty4:tcp://0.0.0.0:5021?textline=true&amp;sync=true"/>
+            <log id="_log1" message="header ${headers}"/>
+            <setBody id="_setBody1">
+                <constant>SUCCESS</constant>
+            </setBody>
+        </route>
+    </camelContext>
+</beans>
