@@ -14,11 +14,18 @@
     </camel:keyManagers>
   </camel:sslContextParameters>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-        <route id="employeeRS">
+        <route id="TCP SSL">
             <from id="_from1" uri="netty4:tcp://0.0.0.0:5021?textline=true&amp;sync=true&amp;ssl=true&amp;sslContextParameters=#sslContextParameters"/>
             <log id="_log1" message="header ${headers}"/>
             <setBody id="_setBody1">
-                <constant>SUCCESS</constant>
+                <simple>SUCCESS SSL ${header.CamelNettyRemoteAddress}</simple>
+            </setBody>
+	</route>
+	<route id="TCP NON-SSL">
+	<from id="_from2" uri="netty4:tcp://0.0.0.0:5022?textline=true&amp;sync=true"/>
+            <log id="_log2" message="header ${headers}"/>
+            <setBody id="_setBody2">
+                <simple>SUCCESS NON-SSL ${header.CamelNettyRemoteAddress}</simple>
             </setBody>
         </route>
     </camelContext>
