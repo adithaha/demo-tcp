@@ -4,9 +4,18 @@
     xmlns:cxf="http://camel.apache.org/schema/cxf"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd http://camel.apache.org/schema/cxf     http://camel.apache.org/schema/cxf/camel-cxf.xsd">
     <!-- Camel Routes -->
+    <camel:sslContextParameters
+      id="sslContextParameters">
+    <camel:keyManagers
+        keyPassword="password">
+      <camel:keyStore
+          resource="classpath:keystore.jks"
+          password="password"/>
+    </camel:keyManagers>
+  </camel:sslContextParameters>
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
         <route id="employeeRS">
-            <from id="_from1" uri="netty4:tcp://0.0.0.0:5021?textline=true&amp;sync=true"/>
+            <from id="_from1" uri="netty4:tcp://0.0.0.0:5021?textline=true&amp;sync=true&amp;ssl=true&amp;sslContextParameters=#sslContextParameters"/>
             <log id="_log1" message="header ${headers}"/>
             <setBody id="_setBody1">
                 <constant>SUCCESS</constant>
